@@ -53,7 +53,7 @@ Example:
 
 # For performace tuning 
 - please check the "scan()" function in QR.js and set the timeOuts. Default 500 ms.
-- play with the constraints, now is looks like below
+- play with the constraints, now it looks like below
 
 ```javascript
 var constraints = {
