@@ -1,38 +1,16 @@
 # JavaScript QRCode reader for HTML5 enabled browser.
 
-This is a port of Lazarsoft’s qrcode reader
+This is a port of edi9999 object kind port of Lazarsoft’s qrcode reader
 
-[![Build Status](https://travis-ci.org/edi9999/jsqrcode.svg?branch=master&style=flat)](https://travis-ci.org/edi9999/jsqrcode)
-
-# Installation
-
-	npm install qrcode-reader
+You need to have the following technologies:
+- JQuery
+- HTML5 enabled browser (Chrome tested), on Firefox need some adjustments
+- at least a simple http server for serve static files (if you try to test locally, example "file:///index.html" some HTML5 features do not enabled, like camera)
+- you better to have secured http(s) to allow the camera permanently, otherwise the browser will always ask permission to use the camera
 
 # Usage
 
-	QrCode=require(‘qrcode-reader’);
-
-Create a new instance of QrCode:
-
-	qr= new QrCode();
-
-Set it's callback to a custom function
-
-	qr.callback= function(result){alert(result)}
-
-Decode an image by it's URL or Data URI
-
-	qr.decode(url or DataURL).
-
-Decode from canvas with "qr-canvas" ID: 
-
-	qrcode.decode()
-
-
-# In the browser
-
-
-Include the scripts in the following order:
+Include the scripts into you main HTML file in the following order:
 
     <script type="text/javascript" src="grid.js"></script>
     <script type="text/javascript" src="version.js"></script>
@@ -51,3 +29,44 @@ Include the scripts in the following order:
     <script type="text/javascript" src="findpat.js"></script>
     <script type="text/javascript" src="alignpat.js"></script>
     <script type="text/javascript" src="databr.js"></script>
+    <script type="text/javascript" src="QR.js"></script>
+
+1. ( modify the code as it is needed )
+2. Initialize QR object
+3. Start scanning 
+4. Write callback for scanning (if callback is success the scanning will be stopped automaticly)
+
+Example:
+
+```javascript
+<script>
+	//If you give container paramter, it will find you the right HTML element by #id.
+	var qr = new QR('container');
+            qr.init();
+            qr.startScanning(function(data){
+            	// Here should write the callback
+                console.log(data);
+            });
+            qr.stopScanning();
+</script>
+```
+
+# For performace tuning 
+- please check the "scan()" function in QR.js and set the timeOuts. Default 500 ms.
+- play with the constraints, now is looks like below
+
+```javascript
+var constraints = {
+	video: {
+		"mandatory": {
+			"minWidth": "320",
+			"minHeight": "240",
+			"maxWidth": "320",
+			"maxHeight": "240",
+			"maxFrameRate": "30"
+		},
+		"optional": [{"sourceId": videoSource}]
+	}
+};
+```
+
